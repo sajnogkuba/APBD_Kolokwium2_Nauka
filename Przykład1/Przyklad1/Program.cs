@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Przyklad1.Context;
+using Przyklad1.Endpoints;
+using Przyklad1.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddDbContext<DataBaseContext>(opt =>
 {
     opt.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
@@ -23,6 +25,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+var baseEndpointsGroup = app.MapGroup("api");
+baseEndpointsGroup.RegisterAccountEndpoints();
 
 app.Run();
