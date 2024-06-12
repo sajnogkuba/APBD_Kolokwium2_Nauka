@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddDbContext<DataBaseContext>(opt =>
 {
     opt.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
@@ -27,5 +28,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 var baseEndpointsGroup = app.MapGroup("api");
 baseEndpointsGroup.RegisterAccountEndpoints();
+baseEndpointsGroup.RegisterProductEndpoints();
 
 app.Run();
