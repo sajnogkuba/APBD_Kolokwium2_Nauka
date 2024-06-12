@@ -11,7 +11,7 @@ public class WykonawcaUtwor
     
     [Column("IdWUtwor")]
     [ForeignKey("Utwor")]
-    public int IdWUtwor { get; set; }
+    public int IdUtwor { get; set; }
     
     public Muzyk Muzyk { get; set; }
     

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Przykład2.Contexts;
 
@@ -11,9 +12,11 @@ using Przykład2.Contexts;
 namespace Przykład2.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240612191118_add data to tables")]
+    partial class adddatatotables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -188,13 +191,13 @@ namespace Przykład2.Migrations
                         .HasColumnType("int")
                         .HasColumnName("IdWMuzyk");
 
-                    b.Property<int>("IdUtwor")
+                    b.Property<int>("IdWUtwor")
                         .HasColumnType("int")
                         .HasColumnName("IdWUtwor");
 
-                    b.HasKey("IdWMuzyk", "IdUtwor");
+                    b.HasKey("IdWMuzyk", "IdWUtwor");
 
-                    b.HasIndex("IdUtwor");
+                    b.HasIndex("IdWUtwor");
 
                     b.ToTable("WykonawcaUtwor");
 
@@ -202,17 +205,17 @@ namespace Przykład2.Migrations
                         new
                         {
                             IdWMuzyk = 1,
-                            IdUtwor = 2
+                            IdWUtwor = 2
                         },
                         new
                         {
                             IdWMuzyk = 2,
-                            IdUtwor = 1
+                            IdWUtwor = 1
                         },
                         new
                         {
                             IdWMuzyk = 3,
-                            IdUtwor = 3
+                            IdWUtwor = 3
                         });
                 });
 
@@ -277,15 +280,15 @@ namespace Przykład2.Migrations
 
             modelBuilder.Entity("Przykład2.Models.WykonawcaUtwor", b =>
                 {
-                    b.HasOne("Przykład2.Models.Utwor", "Utwor")
-                        .WithMany("WykonawcyUtwor")
-                        .HasForeignKey("IdUtwor")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Przykład2.Models.Muzyk", "Muzyk")
                         .WithMany("WykonawcyUtwor")
                         .HasForeignKey("IdWMuzyk")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Przykład2.Models.Utwor", "Utwor")
+                        .WithMany("WykonawcyUtwor")
+                        .HasForeignKey("IdWUtwor")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

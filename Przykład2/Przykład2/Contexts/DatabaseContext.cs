@@ -24,7 +24,7 @@ public class DatabaseContext : DbContext
         base.OnModelCreating(modelBuilder);
         
         modelBuilder.Entity<WykonawcaUtwor>()
-            .HasKey(wu => new { wu.IdWMuzyk, wu.IdWUtwor });
+            .HasKey(wu => new { wu.IdWMuzyk, wu.IdUtwor });
 
         modelBuilder.Entity<Muzyk>()
             .HasData(new List<Muzyk>()
@@ -130,17 +130,17 @@ public class DatabaseContext : DbContext
                 new WykonawcaUtwor()
                 {
                     IdWMuzyk = 1,
-                    IdWUtwor = 2
+                    IdUtwor = 2
                 },
                 new WykonawcaUtwor()
                 {
                     IdWMuzyk = 2,
-                    IdWUtwor = 1
+                    IdUtwor = 1
                 },
                 new WykonawcaUtwor()
                 {
                     IdWMuzyk = 3,
-                    IdWUtwor = 3
+                    IdUtwor = 3
                 }
             });
     }
