@@ -19,6 +19,7 @@ public class ProductService(DataBaseContext context) : IProductService
         {
             ProductName = data.productName,
             ProductWeight = data.productWeight,
+            ProductWidth = data.productWidth,
             ProductHeight = data.productHeight,
             ProductDepth = data.productDepth
         };

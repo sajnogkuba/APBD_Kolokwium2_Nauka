@@ -1,6 +1,8 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Przyklad1.Context;
 using Przyklad1.Endpoints;
+using Przyklad1.RequestModels;
 using Przyklad1.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddValidatorsFromAssemblyContaining<PostProductRequest>();
 builder.Services.AddDbContext<DataBaseContext>(opt =>
 {
     opt.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
