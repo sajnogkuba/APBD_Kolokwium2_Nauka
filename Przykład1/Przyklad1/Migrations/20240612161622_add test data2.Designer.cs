@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Przyklad1.Context;
 
@@ -10,9 +11,11 @@ using Przyklad1.Context;
 namespace Przyklad1.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240612161622_add test data2")]
+    partial class addtestdata2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,7 +64,7 @@ namespace Przyklad1.Migrations
 
                     b.HasIndex("RoleID");
 
-                    b.ToTable("Accounts", (string)null);
+                    b.ToTable("Accounts");
 
                     b.HasData(
                         new
@@ -110,7 +113,7 @@ namespace Przyklad1.Migrations
 
                     b.HasKey("CategoryID");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
 
                     b.HasData(
                         new
@@ -163,7 +166,7 @@ namespace Przyklad1.Migrations
 
                     b.HasKey("ProductID");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
 
                     b.HasData(
                         new
@@ -209,7 +212,7 @@ namespace Przyklad1.Migrations
 
                     b.HasIndex("CategoryID");
 
-                    b.ToTable("Products_Categories", (string)null);
+                    b.ToTable("Products_Categories");
 
                     b.HasData(
                         new
@@ -246,7 +249,7 @@ namespace Przyklad1.Migrations
 
                     b.HasKey("RoleID");
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("Roles");
 
                     b.HasData(
                         new
@@ -284,7 +287,7 @@ namespace Przyklad1.Migrations
 
                     b.HasIndex("AccountID");
 
-                    b.ToTable("Shopping_Carts", (string)null);
+                    b.ToTable("Shopping_Carts");
 
                     b.HasData(
                         new

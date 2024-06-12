@@ -137,6 +137,12 @@ public class DataBaseContext : DbContext
             },
             new ShoppingCart()
             {
+                AccountID = 1,
+                ProductID = 2,
+                ShoppingCartAmount = 12
+            },
+            new ShoppingCart()
+            {
                 AccountID = 2,
                 ProductID = 2,
                 ShoppingCartAmount = 2
