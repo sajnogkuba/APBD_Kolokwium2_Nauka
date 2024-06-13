@@ -1,6 +1,8 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Przykład2.Contexts;
 using Przykład2.Endpoints;
+using Przykład2.RequestModels;
 using Przykład2.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IMuzykService, MuzykService>();
+builder.Services.AddValidatorsFromAssemblyContaining<CreateMuzykRequestModel>();
+builder.Services.AddValidatorsFromAssemblyContaining<CreateUtworRequestModel>();
 builder.Services.AddDbContext<DatabaseContext>(opt =>
 {
     opt.UseSqlServer(builder.Configuration.GetConnectionString("Default"));

@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Przykład2.Contexts;
 using Przykład2.Exceptions;
+using Przykład2.Models;
+using Przykład2.RequestModels;
 using Przykład2.ResponseModels;
 
 namespace Przykład2.Services;
@@ -9,6 +11,7 @@ namespace Przykład2.Services;
 public interface IMuzykService
 {
     Task<GetMuzykResponseModel> GetMuzykByIdAsync(int id);
+    Task CreateMuzyk(CreateMuzykRequestModel data);
 }
 
 public class MuzykService(DatabaseContext context) : IMuzykService
@@ -37,5 +40,39 @@ public class MuzykService(DatabaseContext context) : IMuzykService
         }
 
         return result;
+    }
+
+    public async Task CreateMuzyk(CreateMuzykRequestModel data)
+    {
+        var newMuzyk = new Muzyk
+        {
+            Imie = data.Imie,
+            Nazwisko = data.Nazwisko,
+            Pseudonim = data.Pseudonim
+        };
+        
+        context.Muzycy.Add(newMuzyk);
+        
+        var utwor = await context.Utwory.Where(e => e.IdUtwor == data.Utwor.IdUtwor).FirstOrDefaultAsync();
+
+        if (utwor is null)
+        {
+            context.Utwory.Add(data.Utwor);
+            context.WykonawcyUtwory.Add(new WykonawcaUtwor
+            {
+                IdUtwor = data.Utwor.IdUtwor,
+                IdWMuzyk = newMuzyk.IdMuzyk
+            });
+        }
+        else
+        {
+            context.WykonawcyUtwory.Add(new WykonawcaUtwor
+            {
+                IdUtwor = utwor.IdUtwor,
+                IdWMuzyk = newMuzyk.IdMuzyk
+            });
+        }
+        
+        await context.SaveChangesAsync();
     }
 }
