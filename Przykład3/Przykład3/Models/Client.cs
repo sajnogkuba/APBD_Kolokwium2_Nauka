@@ -34,4 +34,6 @@ public class Client
     public int ClientCategoryId { get; set; }
     
     public ClientCategory ClientCategory { get; set; }
+    
+    public IEnumerable<Reservation> Reservations { get; set; }
 }

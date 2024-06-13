@@ -17,4 +17,5 @@ public class BoatStandard
     [Column("Level")]
     public int BoatStandardLevel { get; set; }
     
+    public IEnumerable<Reservation> Reservations { get; set; }
 }
