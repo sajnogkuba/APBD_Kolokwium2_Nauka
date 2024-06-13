@@ -18,4 +18,5 @@ public class BoatStandard
     public int BoatStandardLevel { get; set; }
     
     public IEnumerable<Reservation> Reservations { get; set; }
+    public IEnumerable<Sailboat> Sailboats { get; set; }
 }
