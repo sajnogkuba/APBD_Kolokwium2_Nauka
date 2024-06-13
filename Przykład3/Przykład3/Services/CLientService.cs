@@ -35,7 +35,8 @@ public class ClientService(DatabaseContext context) : IClientService
                     Fulfilled = reservation.ReservationFulfilled,
                     Price = reservation.ReservationPrice,
                     CanceledReason = reservation.ReservationCancelReason
-                }).ToList()
+                }).OrderBy(reservation => reservation.StartDate)
+                    .ToList()
             }).FirstOrDefaultAsync();
 
         if (result is null)

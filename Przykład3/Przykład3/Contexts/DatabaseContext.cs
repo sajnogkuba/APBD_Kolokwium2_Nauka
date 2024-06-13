@@ -10,6 +10,7 @@ public class DatabaseContext : DbContext
     public DbSet<BoatStandard> BoatStandards { get; set; }
     public DbSet<Reservation> Reservations { get; set; }
     public DbSet<Sailboat> Sailboats { get; set; }
+    public DbSet<SailboatReservation> SailboatsReservations { get; set; }
     protected DatabaseContext()
     {
     }

@@ -1,6 +1,8 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Przykład3.Contexts;
 using Przykład3.Endpoints;
+using Przykład3.RequestModels;
 using Przykład3.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddScoped<IReservationService, ReservationService>();
+builder.Services.AddValidatorsFromAssemblyContaining<CreateReservationRequestModel>();
 builder.Services.AddDbContext<DatabaseContext>(opt =>
 {
     opt.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
@@ -29,5 +33,6 @@ app.UseHttpsRedirection();
 var baseEndpointsGroup = app.MapGroup("api");
 
 baseEndpointsGroup.RegisterClientEndpoints();
+baseEndpointsGroup.RegisterReservationEndpoints();
 
 app.Run();
