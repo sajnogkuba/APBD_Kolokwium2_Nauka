@@ -106,6 +106,7 @@ public class CharacterService(DatabaseContext context) : ICharacterService
                     characterId = id
                 });
             }
+            await context.SaveChangesAsync();
         }
         await context.SaveChangesAsync();
         return result;
