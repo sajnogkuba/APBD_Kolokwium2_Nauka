@@ -16,4 +16,6 @@ public class ClientCategory
     
     [Column("DiscountPerc")]
     public int ClientCategoryDiscountPercentage { get; set; }
+    
+    public IEnumerable<Client> Clients { get; set; }
 }

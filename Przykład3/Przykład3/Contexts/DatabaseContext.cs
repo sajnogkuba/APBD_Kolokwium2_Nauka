@@ -6,6 +6,7 @@ namespace Przykład3.Contexts;
 public class DatabaseContext : DbContext
 {
     public DbSet<ClientCategory> ClientCategories { get; set; }
+    public DbSet<Client> Clients { get; set; }
     protected DatabaseContext()
     {
     }
