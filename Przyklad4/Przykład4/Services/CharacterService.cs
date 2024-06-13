@@ -27,6 +27,11 @@ public class CharacterService(DatabaseContext context) : ICharacterService
                     itemName = backpack.Item.ItemName,
                     itemWeight = backpack.Item.ItemWeight,
                     amount = backpack.BackpackAmount
+                }).ToList(),
+                titles = character.Titles.Select(title => new TitleResponseModel()
+                {
+                    title = title.Title.TitleName,
+                    aquiredAt = title.AcquiredAt
                 }).ToList()
             }).FirstOrDefaultAsync();
 

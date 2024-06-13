@@ -26,5 +26,5 @@ public class Character
     
     public IEnumerable<Backpack> Backpacks { get; set; }
     
-    public IEnumerable<CharacterTitle> CharacterTitles { get; set; }
+    public IEnumerable<CharacterTitle> Titles { get; set; }
 }
