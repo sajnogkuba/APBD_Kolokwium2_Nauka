@@ -40,4 +40,6 @@ public class Reservation
     public Client Client { get; set; }
     
     public BoatStandard BoatStandard { get; set; }
+    
+    public IEnumerable<SailboatReservation> SailboatReservations { get; set; }
 }

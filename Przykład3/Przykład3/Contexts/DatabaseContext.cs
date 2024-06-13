@@ -21,5 +21,20 @@ public class DatabaseContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        
+        modelBuilder.Entity<SailboatReservation>().HasKey(sr => new {sr.SailboatReservationSailboatId, sr.SailboatReservationReservationId});
+        
+        modelBuilder.Entity<SailboatReservation>()
+            .HasOne(sr => sr.Sailboat)
+            .WithMany(s => s.SailboatReservations)
+            .HasForeignKey(sr => sr.SailboatReservationSailboatId)
+            .OnDelete(DeleteBehavior.NoAction);
+        
+        modelBuilder.Entity<SailboatReservation>()
+            .HasOne(sr => sr.Reservation)
+            .WithMany(r => r.SailboatReservations)
+            .HasForeignKey(sr => sr.SailboatReservationReservationId)
+            .OnDelete(DeleteBehavior.NoAction);
+            
     }
 }

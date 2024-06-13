@@ -30,4 +30,6 @@ public class Sailboat
     
     public BoatStandard BoatStandard { get; set; }
     
+    public IEnumerable<SailboatReservation> SailboatReservations { get; set; }
+    
 }

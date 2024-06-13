@@ -12,8 +12,8 @@ using Przykład3.Contexts;
 namespace Przykład3.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240613113104_create table Reservation")]
-    partial class createtableReservation
+    [Migration("20240613120547_create table Sailboat_Reservation fix3")]
+    partial class createtableSailboat_Reservationfix3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -176,6 +176,63 @@ namespace Przykład3.Migrations
                     b.ToTable("Reservation");
                 });
 
+            modelBuilder.Entity("Przykład3.Models.Sailboat", b =>
+                {
+                    b.Property<int>("SailboatId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("IdSailboat");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SailboatId"));
+
+                    b.Property<int>("SailboatBoatStandardId")
+                        .HasColumnType("int")
+                        .HasColumnName("IdBoatStandard");
+
+                    b.Property<int>("SailboatCapacity")
+                        .HasColumnType("int")
+                        .HasColumnName("Capacity");
+
+                    b.Property<string>("SailboatDescription")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("Description");
+
+                    b.Property<string>("SailboatName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("Name");
+
+                    b.Property<decimal>("SailboatPrice")
+                        .HasColumnType("money")
+                        .HasColumnName("Price");
+
+                    b.HasKey("SailboatId");
+
+                    b.HasIndex("SailboatBoatStandardId");
+
+                    b.ToTable("Sailboat");
+                });
+
+            modelBuilder.Entity("Przykład3.Models.SailboatReservation", b =>
+                {
+                    b.Property<int>("SailboatReservationSailboatId")
+                        .HasColumnType("int")
+                        .HasColumnName("IdSailboat");
+
+                    b.Property<int>("SailboatReservationReservationId")
+                        .HasColumnType("int")
+                        .HasColumnName("IdReservation");
+
+                    b.HasKey("SailboatReservationSailboatId", "SailboatReservationReservationId");
+
+                    b.HasIndex("SailboatReservationReservationId");
+
+                    b.ToTable("Saleboat_Reservation");
+                });
+
             modelBuilder.Entity("Przykład3.Models.Client", b =>
                 {
                     b.HasOne("Przykład3.Models.ClientCategory", "ClientCategory")
@@ -206,9 +263,41 @@ namespace Przykład3.Migrations
                     b.Navigation("Client");
                 });
 
+            modelBuilder.Entity("Przykład3.Models.Sailboat", b =>
+                {
+                    b.HasOne("Przykład3.Models.BoatStandard", "BoatStandard")
+                        .WithMany("Sailboats")
+                        .HasForeignKey("SailboatBoatStandardId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BoatStandard");
+                });
+
+            modelBuilder.Entity("Przykład3.Models.SailboatReservation", b =>
+                {
+                    b.HasOne("Przykład3.Models.Reservation", "Reservation")
+                        .WithMany("SailboatReservations")
+                        .HasForeignKey("SailboatReservationReservationId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Przykład3.Models.Sailboat", "Sailboat")
+                        .WithMany("SailboatReservations")
+                        .HasForeignKey("SailboatReservationSailboatId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Reservation");
+
+                    b.Navigation("Sailboat");
+                });
+
             modelBuilder.Entity("Przykład3.Models.BoatStandard", b =>
                 {
                     b.Navigation("Reservations");
+
+                    b.Navigation("Sailboats");
                 });
 
             modelBuilder.Entity("Przykład3.Models.Client", b =>
@@ -219,6 +308,16 @@ namespace Przykład3.Migrations
             modelBuilder.Entity("Przykład3.Models.ClientCategory", b =>
                 {
                     b.Navigation("Clients");
+                });
+
+            modelBuilder.Entity("Przykład3.Models.Reservation", b =>
+                {
+                    b.Navigation("SailboatReservations");
+                });
+
+            modelBuilder.Entity("Przykład3.Models.Sailboat", b =>
+                {
+                    b.Navigation("SailboatReservations");
                 });
 #pragma warning restore 612, 618
         }

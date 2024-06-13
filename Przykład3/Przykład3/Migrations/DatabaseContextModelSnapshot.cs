@@ -213,6 +213,23 @@ namespace Przykład3.Migrations
                     b.ToTable("Sailboat");
                 });
 
+            modelBuilder.Entity("Przykład3.Models.SailboatReservation", b =>
+                {
+                    b.Property<int>("SailboatReservationSailboatId")
+                        .HasColumnType("int")
+                        .HasColumnName("IdSailboat");
+
+                    b.Property<int>("SailboatReservationReservationId")
+                        .HasColumnType("int")
+                        .HasColumnName("IdReservation");
+
+                    b.HasKey("SailboatReservationSailboatId", "SailboatReservationReservationId");
+
+                    b.HasIndex("SailboatReservationReservationId");
+
+                    b.ToTable("Saleboat_Reservation");
+                });
+
             modelBuilder.Entity("Przykład3.Models.Client", b =>
                 {
                     b.HasOne("Przykład3.Models.ClientCategory", "ClientCategory")
@@ -254,6 +271,25 @@ namespace Przykład3.Migrations
                     b.Navigation("BoatStandard");
                 });
 
+            modelBuilder.Entity("Przykład3.Models.SailboatReservation", b =>
+                {
+                    b.HasOne("Przykład3.Models.Reservation", "Reservation")
+                        .WithMany("SailboatReservations")
+                        .HasForeignKey("SailboatReservationReservationId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Przykład3.Models.Sailboat", "Sailboat")
+                        .WithMany("SailboatReservations")
+                        .HasForeignKey("SailboatReservationSailboatId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Reservation");
+
+                    b.Navigation("Sailboat");
+                });
+
             modelBuilder.Entity("Przykład3.Models.BoatStandard", b =>
                 {
                     b.Navigation("Reservations");
@@ -269,6 +305,16 @@ namespace Przykład3.Migrations
             modelBuilder.Entity("Przykład3.Models.ClientCategory", b =>
                 {
                     b.Navigation("Clients");
+                });
+
+            modelBuilder.Entity("Przykład3.Models.Reservation", b =>
+                {
+                    b.Navigation("SailboatReservations");
+                });
+
+            modelBuilder.Entity("Przykład3.Models.Sailboat", b =>
+                {
+                    b.Navigation("SailboatReservations");
                 });
 #pragma warning restore 612, 618
         }
