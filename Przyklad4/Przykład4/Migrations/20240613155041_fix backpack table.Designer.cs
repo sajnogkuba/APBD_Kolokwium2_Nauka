@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Przykład4.Contexts;
 
@@ -11,9 +12,11 @@ using Przykład4.Contexts;
 namespace Przykład4.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240613155041_fix backpack table")]
+    partial class fixbackpacktable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,26 +44,6 @@ namespace Przykład4.Migrations
                     b.HasIndex("BackpackItemId");
 
                     b.ToTable("backpacks");
-
-                    b.HasData(
-                        new
-                        {
-                            BackpackCharacterId = 1,
-                            BackpackItemId = 1,
-                            BackpackAmount = 1
-                        },
-                        new
-                        {
-                            BackpackCharacterId = 2,
-                            BackpackItemId = 2,
-                            BackpackAmount = 2
-                        },
-                        new
-                        {
-                            BackpackCharacterId = 3,
-                            BackpackItemId = 3,
-                            BackpackAmount = 3
-                        });
                 });
 
             modelBuilder.Entity("Przykład4.Models.Character", b =>
@@ -148,19 +131,19 @@ namespace Przykład4.Migrations
                         {
                             CharacterId = 1,
                             TitleId = 1,
-                            AcquiredAt = new DateTime(2024, 6, 13, 17, 52, 4, 625, DateTimeKind.Local).AddTicks(5360)
+                            AcquiredAt = new DateTime(2024, 6, 13, 17, 50, 40, 694, DateTimeKind.Local).AddTicks(1440)
                         },
                         new
                         {
                             CharacterId = 2,
                             TitleId = 2,
-                            AcquiredAt = new DateTime(2024, 6, 13, 17, 52, 4, 643, DateTimeKind.Local).AddTicks(930)
+                            AcquiredAt = new DateTime(2024, 6, 13, 17, 50, 40, 711, DateTimeKind.Local).AddTicks(4770)
                         },
                         new
                         {
                             CharacterId = 3,
                             TitleId = 3,
-                            AcquiredAt = new DateTime(2024, 6, 13, 17, 52, 4, 643, DateTimeKind.Local).AddTicks(950)
+                            AcquiredAt = new DateTime(2024, 6, 13, 17, 50, 40, 711, DateTimeKind.Local).AddTicks(4790)
                         });
                 });
 

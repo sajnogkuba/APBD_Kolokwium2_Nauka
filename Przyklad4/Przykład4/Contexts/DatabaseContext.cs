@@ -29,11 +29,23 @@ public class DatabaseContext : DbContext
             ct.TitleId
         });
 
-        modelBuilder.Entity<Backpack>().HasKey(backpack => new
+        modelBuilder.Entity<Backpack>().HasKey(b => new
         {
-            backpack.BackpackCharacterId,
-            backpack.BackpackItemId
+            b.BackpackCharacterId,
+            b.BackpackItemId
         });
+        
+        modelBuilder.Entity<Backpack>()
+            .HasOne(b => b.Character)
+            .WithMany(c => c.Backpacks)
+            .HasForeignKey(b => b.BackpackCharacterId)
+            .OnDelete(DeleteBehavior.NoAction);
+        
+        modelBuilder.Entity<Backpack>()
+            .HasOne(b => b.Item)
+            .WithMany(c => c.Backpacks)
+            .HasForeignKey(b => b.BackpackItemId)
+            .OnDelete(DeleteBehavior.NoAction);
 
         modelBuilder.Entity<Item>().HasData(new List<Item>()
         {

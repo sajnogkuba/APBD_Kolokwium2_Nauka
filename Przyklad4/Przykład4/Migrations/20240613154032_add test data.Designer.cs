@@ -12,8 +12,8 @@ using Przykład4.Contexts;
 namespace Przykład4.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240613152521_create tables")]
-    partial class createtables
+    [Migration("20240613154032_add test data")]
+    partial class addtestdata
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -93,6 +93,32 @@ namespace Przykład4.Migrations
                     b.HasKey("CharacterId");
 
                     b.ToTable("characters");
+
+                    b.HasData(
+                        new
+                        {
+                            CharacterId = 1,
+                            CharacterCurrentWeight = 0,
+                            CharacterFirstName = "TestCharacterFirstName",
+                            CharacterLastName = "TestCharacterLastName",
+                            CharacterMaxWeight = 100
+                        },
+                        new
+                        {
+                            CharacterId = 2,
+                            CharacterCurrentWeight = 20,
+                            CharacterFirstName = "TestCharacterFirstName2",
+                            CharacterLastName = "TestCharacterLastName2",
+                            CharacterMaxWeight = 120
+                        },
+                        new
+                        {
+                            CharacterId = 3,
+                            CharacterCurrentWeight = 30,
+                            CharacterFirstName = "TestCharacterFirstName3",
+                            CharacterLastName = "TestCharacterLastName3",
+                            CharacterMaxWeight = 130
+                        });
                 });
 
             modelBuilder.Entity("Przykład4.Models.CharacterTitle", b =>
@@ -114,6 +140,26 @@ namespace Przykład4.Migrations
                     b.HasIndex("TitleId");
 
                     b.ToTable("character_titles");
+
+                    b.HasData(
+                        new
+                        {
+                            CharacterId = 1,
+                            TitleId = 1,
+                            AcquiredAt = new DateTime(2024, 6, 13, 17, 40, 32, 298, DateTimeKind.Local).AddTicks(7930)
+                        },
+                        new
+                        {
+                            CharacterId = 2,
+                            TitleId = 2,
+                            AcquiredAt = new DateTime(2024, 6, 13, 17, 40, 32, 316, DateTimeKind.Local).AddTicks(700)
+                        },
+                        new
+                        {
+                            CharacterId = 3,
+                            TitleId = 3,
+                            AcquiredAt = new DateTime(2024, 6, 13, 17, 40, 32, 316, DateTimeKind.Local).AddTicks(720)
+                        });
                 });
 
             modelBuilder.Entity("Przykład4.Models.Item", b =>
@@ -138,6 +184,26 @@ namespace Przykład4.Migrations
                     b.HasKey("ItemId");
 
                     b.ToTable("items");
+
+                    b.HasData(
+                        new
+                        {
+                            ItemId = 1,
+                            ItemName = "TestItem",
+                            ItemWeight = 10
+                        },
+                        new
+                        {
+                            ItemId = 2,
+                            ItemName = "TestItem2",
+                            ItemWeight = 20
+                        },
+                        new
+                        {
+                            ItemId = 3,
+                            ItemName = "TestItem3",
+                            ItemWeight = 30
+                        });
                 });
 
             modelBuilder.Entity("Przykład4.Models.Title", b =>
@@ -158,6 +224,23 @@ namespace Przykład4.Migrations
                     b.HasKey("TitleId");
 
                     b.ToTable("titles");
+
+                    b.HasData(
+                        new
+                        {
+                            TitleId = 1,
+                            TitleName = "TestTitle"
+                        },
+                        new
+                        {
+                            TitleId = 2,
+                            TitleName = "TestTitle2"
+                        },
+                        new
+                        {
+                            TitleId = 3,
+                            TitleName = "TestTitle3"
+                        });
                 });
 
             modelBuilder.Entity("Przykład4.Models.Backpack", b =>

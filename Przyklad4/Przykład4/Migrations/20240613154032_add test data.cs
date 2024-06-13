@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Przykład4.Migrations
 {
     /// <inheritdoc />
-    public partial class createtables : Migration
+    public partial class addtestdata : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -104,6 +106,46 @@ namespace Przykład4.Migrations
                         principalTable: "titles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "characters",
+                columns: new[] { "Id", "CurrentWei", "FirstName", "LastName", "MaxWeight" },
+                values: new object[,]
+                {
+                    { 1, 0, "TestCharacterFirstName", "TestCharacterLastName", 100 },
+                    { 2, 20, "TestCharacterFirstName2", "TestCharacterLastName2", 120 },
+                    { 3, 30, "TestCharacterFirstName3", "TestCharacterLastName3", 130 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "items",
+                columns: new[] { "Id", "Name", "Weight" },
+                values: new object[,]
+                {
+                    { 1, "TestItem", 10 },
+                    { 2, "TestItem2", 20 },
+                    { 3, "TestItem3", 30 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "titles",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "TestTitle" },
+                    { 2, "TestTitle2" },
+                    { 3, "TestTitle3" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "character_titles",
+                columns: new[] { "CharacterId", "TitleId", "AcquiredAt" },
+                values: new object[,]
+                {
+                    { 1, 1, new DateTime(2024, 6, 13, 17, 40, 32, 298, DateTimeKind.Local).AddTicks(7930) },
+                    { 2, 2, new DateTime(2024, 6, 13, 17, 40, 32, 316, DateTimeKind.Local).AddTicks(700) },
+                    { 3, 3, new DateTime(2024, 6, 13, 17, 40, 32, 316, DateTimeKind.Local).AddTicks(720) }
                 });
 
             migrationBuilder.CreateIndex(
