@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using Przykład3.Models;
 
 namespace Przykład3.Contexts;
 
 public class DatabaseContext : DbContext
 {
-    // public DbSet<Album> Albumy { get; set; }
-    // ...
+    public DbSet<ClientCategory> ClientCategories { get; set; }
     protected DatabaseContext()
     {
     }
@@ -16,5 +16,6 @@ public class DatabaseContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
     }
 }
