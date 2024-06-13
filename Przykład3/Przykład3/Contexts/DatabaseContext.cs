@@ -7,6 +7,7 @@ public class DatabaseContext : DbContext
 {
     public DbSet<ClientCategory> ClientCategories { get; set; }
     public DbSet<Client> Clients { get; set; }
+    public DbSet<BoatStandard> BoatStandards { get; set; }
     protected DatabaseContext()
     {
     }
