@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Przykład4.Models;
 
 [Table("backpacks")]
+// [PrimaryKey(nameof(AccountId), nameof(ProductId))] - klucz na kilku tabeklach adnotacje
 public class Backpack
 {
     [Column("CharacterId")]
