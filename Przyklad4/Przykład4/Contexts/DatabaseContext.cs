@@ -5,11 +5,11 @@ namespace Przykład4.Contexts;
 
 public class DatabaseContext : DbContext
 {
-    // public DbSet<Album> Albumy { get; set; }
-    // public DbSet<Utwor> Utwory { get; set; }
-    // public DbSet<Muzyk> Muzycy { get; set; }
-    // public DbSet<Wytwornia> Wytwornie { get; set; }
-    // public DbSet<WykonawcaUtwor> WykonawcyUtwory { get; set; }
+    public DbSet<Character> Characters { get; set; }
+    public DbSet<Item> Items { get; set; }
+    public DbSet<Backpack> Backpacks { get; set; }
+    public DbSet<Title> Titles { get; set; }
+    public DbSet<CharacterTitle> CharacterTitles { get; set; }
     
     protected DatabaseContext()
     {

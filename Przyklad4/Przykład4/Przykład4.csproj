@@ -19,10 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Endpoints\" />
       <Folder Include="RequestModels\" />
-      <Folder Include="ResponseModels\" />
-      <Folder Include="Services\" />
       <Folder Include="Validators\" />
     </ItemGroup>
 
