@@ -49,65 +49,52 @@ public class CharacterService(DatabaseContext context) : ICharacterService
     public async Task<List<AddItemsResponseModel>> AddItemsAsync(int id, AddItemsRequestModel data)
     {
         var newItemsWeight = 0;
-        foreach (var dataItem in data.items)
+        foreach (var dataItem in data.Items)
         {
-            var item = context.Items.Where(i => i.ItemId == dataItem).FirstOrDefaultAsync();
+            var item = context.Items.Where(i => i.ItemPK == dataItem).FirstOrDefaultAsync();
             if (item.Result is null)
             {
                 throw new NotFoundException($"Item with id: {dataItem} not found");
             }
             newItemsWeight += item.Result.ItemWeight;
         }
-        
-        var character = context.Characters
-            .Where(c => c.CharacterId == id)
+
+        var character = await context.Characters
+            .Where(character => character.CharacterPK == id)
             .FirstOrDefaultAsync();
 
-        if(character.Result is null)
+        if (character is null)
         {
             throw new NotFoundException($"Character with id: {id} not found");
         }
-
-        if (character.Result.CharacterCurrentWeight + newItemsWeight > character.Result.CharacterMaxWeight)
+        
+        if (character.CharacterCurrentWeight + newItemsWeight > character.CharacterMaxWeight)
         {
             throw new BadRequestException("Character can't carry that much weight");
         }
-        character.Result.CharacterCurrentWeight += newItemsWeight;
-
+        
+        character.CharacterCurrentWeight += newItemsWeight;
+        
         var result = new List<AddItemsResponseModel>();
-        foreach (var dataItem in data.items)
+        
+        foreach (var item in data.Items)
         {
-            var bacpack = await context.Backpacks
-                .Where(b => b.BackpackCharacterId == id && b.BackpackItemId == dataItem)
-                .FirstOrDefaultAsync();
+            var newBackpackSlot = new BackpackSlot()
+            {
+                Character = character,
+                Item = await context.Items.Where(i => i.ItemPK == item).FirstOrDefaultAsync() ??
+                       throw new NotFoundException("")
+            };
+            await context.BackpackSlots.AddAsync(newBackpackSlot);
+            result.Add(new AddItemsResponseModel()
+            {
+                characterId = character.CharacterPK,
+                itemId = item,
+                slotId = newBackpackSlot.BackpackSlotPK
+            });
 
-            if (bacpack is null)
-            {
-                await context.Backpacks.AddAsync(new Backpack()
-                {
-                    BackpackCharacterId = id,
-                    BackpackItemId = dataItem,
-                    BackpackAmount = 1
-                });
-                result.Add(new AddItemsResponseModel()
-                {
-                    amount = 1,
-                    itemId = dataItem,
-                    characterId = id
-                });
-            }
-            else
-            {
-                bacpack.BackpackAmount++;
-                result.Add(new AddItemsResponseModel()
-                {
-                    amount = bacpack.BackpackAmount,
-                    itemId = dataItem,
-                    characterId = id
-                });
-            }
-            await context.SaveChangesAsync();
         }
+        
         await context.SaveChangesAsync();
         return result;
     }
