@@ -1,12 +1,11 @@
-using FluentValidation;
+using Kolokwium2.Contexts;
+using Kolokwium2.Exceptions;
+using Kolokwium2.Models;
+using Kolokwium2.RequestModels;
+using Kolokwium2.ResponseModels;
 using Microsoft.EntityFrameworkCore;
-using Przykład4.Contexts;
-using Przykład4.Exceptions;
-using Przykład4.Models;
-using Przykład4.RequestModels;
-using Przykład4.ResponseModels;
 
-namespace Przykład4.Services;
+namespace Kolokwium2.Services;
 
 public interface ICharacterService
 {
@@ -14,31 +13,33 @@ public interface ICharacterService
     Task<List<AddItemsResponseModel>> AddItemsAsync(int id, AddItemsRequestModel data);
 }
 
+
 public class CharacterService(DatabaseContext context) : ICharacterService
 {
     public async Task<GetCharacterResponseModel> GetCharacterByIdAsync(int id)
     {
         var result = await context.Characters
-            .Where(character => character.CharacterId == id)
+            .Where(character => character.CharacterPK == id)
             .Select(character => new GetCharacterResponseModel()
             {
                 firstName = character.CharacterFirstName,
                 lastName = character.CharacterLastName,
                 currentWeight = character.CharacterCurrentWeight,
                 maxWeight = character.CharacterMaxWeight,
-                backpackItems = character.Backpacks.Select(backpack => new BackpackItemResponseModel()
+                money = character.CharacterMoney,
+                backpackSlots = character.BackpackSlots.Select(item => new BackpackItemResponseModel()
                 {
-                    itemName = backpack.Item.ItemName,
-                    itemWeight = backpack.Item.ItemWeight,
-                    amount = backpack.BackpackAmount
+                    slotID = item.BackpackSlotPK,
+                    itemName = item.Item.ItemName,
+                    itemWeight = item.Item.ItemWeight
                 }).ToList(),
-                titles = character.Titles.Select(title => new TitleResponseModel()
+                titles = character.CharacterTitles.Select(title => new TitleResponseModel()
                 {
                     title = title.Title.TitleName,
-                    aquiredAt = title.AcquiredAt
+                    aquiredAt = title.CharacterTitleAquireAt
                 }).ToList()
             }).FirstOrDefaultAsync();
-
+        
         if (result is null)
         {
             throw new NotFoundException($"Character with id: {id} not found");
